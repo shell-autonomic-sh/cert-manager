@@ -32,6 +32,8 @@ const (
 	IssuerVault string = "vault"
 	// IssuerSelfSigned is a self signing issuer
 	IssuerSelfSigned string = "selfsigned"
+	// IssuerCFSSL is the name of the CFSSL issuer
+	IssuerCFSSL string = "cfssl"
 )
 
 // IssuerFactory is an interface that can be used to obtain Issuer implementations.
@@ -84,6 +86,8 @@ func NameForIssuer(i v1alpha1.GenericIssuer) (string, error) {
 		return IssuerVault, nil
 	case i.GetSpec().SelfSigned != nil:
 		return IssuerSelfSigned, nil
+	case i.GetSpec().CFSSL != nil:
+		return IssuerCFSSL, nil
 	}
 	return "", fmt.Errorf("no issuer specified for Issuer '%s/%s'", i.GetObjectMeta().Namespace, i.GetObjectMeta().Name)
 }

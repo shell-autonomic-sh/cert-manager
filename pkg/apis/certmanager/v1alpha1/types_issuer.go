@@ -78,6 +78,7 @@ type IssuerConfig struct {
 	CA         *CAIssuer         `json:"ca,omitempty"`
 	Vault      *VaultIssuer      `json:"vault,omitempty"`
 	SelfSigned *SelfSignedIssuer `json:"selfSigned,omitempty"`
+	CFSSL      *CFSSLIssuer      `json:"cfssl,omitempty"`
 }
 
 type SelfSignedIssuer struct {
@@ -115,6 +116,14 @@ type CAIssuer struct {
 	// SecretName is the name of the secret used to sign Certificates issued
 	// by this Issuer.
 	SecretName string `json:"secretName"`
+}
+
+type CFSSLIssuer struct {
+	// CFSSL Authentication
+	AuthKey *SecretKeySelector `json:"authKeySecretRef,omitempty"`
+	// Server is the cfssl connection address
+	Server string `json:"server"`
+	Path   string `json:"path"`
 }
 
 // ACMEIssuer contains the specification for an ACME issuer

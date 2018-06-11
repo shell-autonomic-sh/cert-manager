@@ -81,6 +81,12 @@ type CertificateSpec struct {
 	// providers to DNS names.
 	ACME *ACMECertificateConfig `json:"acme,omitempty"`
 
+	// CFSSL contains configuration specific to CFSSL issued Certiicates.
+	// It contains fields 'Label' & 'Profile'.
+	// 'Profile' is a string specifying the signing profile to use to sign the certificate.
+	// 'Label' is a string label for the certificate.
+	CFSSL *CFSSLCertificateConfig `json:"cfssl,omitempty"`
+
 	// KeySize is the key bit size of the corresponding private key for this certificate.
 	// If provided, value must be between 2048 and 8192 inclusive when KeyAlgorithm is
 	// empty or is set to "rsa", and value must be one of (256, 384, 521) when
@@ -116,6 +122,12 @@ type HTTP01SolverConfig struct {
 
 type DNS01SolverConfig struct {
 	Provider string `json:"provider"`
+}
+
+// CFSSLCertificateConfig contains the configuration for the CFSSL certificate provider
+type CFSSLCertificateConfig struct {
+	Profile string `json:"profile,omitempty"`
+	Label   string `json:"label,omitempty"`
 }
 
 // CertificateStatus defines the observed state of Certificate
