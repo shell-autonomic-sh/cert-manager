@@ -151,6 +151,7 @@ func TestSignatureAlgorithmForCertificate(t *testing.T) {
 		{
 			name:      "certificate with KeyAlgorithm rsa and size 1024",
 			keyAlgo:   v1alpha1.RSAKeyAlgorithm,
+			keySize:   1024,
 			expectErr: true,
 		},
 		{
@@ -197,6 +198,7 @@ func TestSignatureAlgorithmForCertificate(t *testing.T) {
 		{
 			name:      "certificate with KeyAlgorithm ecdsa and size 100",
 			keyAlgo:   v1alpha1.ECDSAKeyAlgorithm,
+			keySize:   100,
 			expectErr: true,
 		},
 		{
@@ -204,6 +206,16 @@ func TestSignatureAlgorithmForCertificate(t *testing.T) {
 			keyAlgo:         v1alpha1.KeyAlgorithm("blah"),
 			expectErr:       true,
 			expectedSigAlgo: x509.UnknownSignatureAlgorithm,
+		},
+		{
+			name:            "certificate with KeyAlgorithm ecdsa and KeySize not set",
+			keyAlgo:         v1alpha1.ECDSAKeyAlgorithm,
+			expectedSigAlgo: x509.ECDSAWithSHA256,
+		},
+		{
+			name:            "certificate with KeyAlgorithm rsa and KeySize not set",
+			keyAlgo:         v1alpha1.RSAKeyAlgorithm,
+			expectedSigAlgo: x509.SHA256WithRSA,
 		},
 	}
 

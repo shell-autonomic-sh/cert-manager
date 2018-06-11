@@ -6,6 +6,7 @@ go_library(
         "certificate_acme.go",
         "certificate_acme_dns01.go",
         "certificate_ca.go",
+        "certificate_cfssl.go",
         "certificate_rbac.go",
         "certificate_selfsigned.go",
         "certificate_vault.go",
@@ -16,8 +17,10 @@ go_library(
     deps = [
         "//pkg/apis/certmanager/v1alpha1:go_default_library",
         "//pkg/util:go_default_library",
+        "//pkg/util/pki:go_default_library",
         "//test/e2e/framework:go_default_library",
         "//test/util:go_default_library",
+        "//test/util/cfssl:go_default_library",
         "//test/util/generate:go_default_library",
         "//test/util/vault:go_default_library",
         "//vendor/github.com/onsi/ginkgo:go_default_library",

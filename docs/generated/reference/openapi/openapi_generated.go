@@ -544,6 +544,58 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 			},
 			Dependencies: []string{},
 		},
+		"github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.CFSSLCertificateConfig": {
+			Schema: spec.Schema{
+				SchemaProps: spec.SchemaProps{
+					Description: "CFSSLCertificateConfig contains the configuration for the CFSSL certificate provider",
+					Properties: map[string]spec.Schema{
+						"profile": {
+							SchemaProps: spec.SchemaProps{
+								Type:   []string{"string"},
+								Format: "",
+							},
+						},
+						"label": {
+							SchemaProps: spec.SchemaProps{
+								Type:   []string{"string"},
+								Format: "",
+							},
+						},
+					},
+				},
+			},
+			Dependencies: []string{},
+		},
+		"github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.CFSSLIssuer": {
+			Schema: spec.Schema{
+				SchemaProps: spec.SchemaProps{
+					Properties: map[string]spec.Schema{
+						"authKeySecretRef": {
+							SchemaProps: spec.SchemaProps{
+								Description: "CFSSL Authentication",
+								Ref:         ref("github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.SecretKeySelector"),
+							},
+						},
+						"server": {
+							SchemaProps: spec.SchemaProps{
+								Description: "Server is the cfssl connection address",
+								Type:        []string{"string"},
+								Format:      "",
+							},
+						},
+						"path": {
+							SchemaProps: spec.SchemaProps{
+								Type:   []string{"string"},
+								Format: "",
+							},
+						},
+					},
+					Required: []string{"server", "path"},
+				},
+			},
+			Dependencies: []string{
+				"github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.SecretKeySelector"},
+		},
 		"github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.Certificate": {
 			Schema: spec.Schema{
 				SchemaProps: spec.SchemaProps{
@@ -756,6 +808,12 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 								Ref:         ref("github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.ACMECertificateConfig"),
 							},
 						},
+						"cfssl": {
+							SchemaProps: spec.SchemaProps{
+								Description: "CFSSL contains configuration specific to CFSSL issued Certiicates. It contains fields 'Label' & 'Profile'. 'Profile' is a string specifying the signing profile to use to sign the certificate. 'Label' is a string label for the certificate.",
+								Ref:         ref("github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.CFSSLCertificateConfig"),
+							},
+						},
 						"keySize": {
 							SchemaProps: spec.SchemaProps{
 								Description: "KeySize is the key bit size of the corresponding private key for this certificate. If provided, value must be between 2048 and 8192 inclusive when KeyAlgorithm is empty or is set to \"rsa\", and value must be one of (256, 384, 521) when KeyAlgorithm is set to \"ecdsa\".",
@@ -775,7 +833,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 				},
 			},
 			Dependencies: []string{
-				"github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.ACMECertificateConfig", "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.ObjectReference"},
+				"github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.ACMECertificateConfig", "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.CFSSLCertificateConfig", "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.ObjectReference"},
 		},
 		"github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.CertificateStatus": {
 			Schema: spec.Schema{
@@ -1068,11 +1126,16 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 								Ref: ref("github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.SelfSignedIssuer"),
 							},
 						},
+						"cfssl": {
+							SchemaProps: spec.SchemaProps{
+								Ref: ref("github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.CFSSLIssuer"),
+							},
+						},
 					},
 				},
 			},
 			Dependencies: []string{
-				"github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.ACMEIssuer", "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.CAIssuer", "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.SelfSignedIssuer", "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.VaultIssuer"},
+				"github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.ACMEIssuer", "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.CAIssuer", "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.CFSSLIssuer", "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.SelfSignedIssuer", "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.VaultIssuer"},
 		},
 		"github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.IssuerList": {
 			Schema: spec.Schema{
@@ -1142,11 +1205,16 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 								Ref: ref("github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.SelfSignedIssuer"),
 							},
 						},
+						"cfssl": {
+							SchemaProps: spec.SchemaProps{
+								Ref: ref("github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.CFSSLIssuer"),
+							},
+						},
 					},
 				},
 			},
 			Dependencies: []string{
-				"github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.ACMEIssuer", "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.CAIssuer", "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.SelfSignedIssuer", "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.VaultIssuer"},
+				"github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.ACMEIssuer", "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.CAIssuer", "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.CFSSLIssuer", "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.SelfSignedIssuer", "github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.VaultIssuer"},
 		},
 		"github.com/jetstack/cert-manager/pkg/apis/certmanager/v1alpha1.IssuerStatus": {
 			Schema: spec.Schema{
