@@ -345,6 +345,9 @@ func (c *Controller) updateCertificateStatus(old, new *v1alpha1.Certificate) (*v
 	if reflect.DeepEqual(old.Status, new.Status) {
 		return nil, nil
 	}
+	if !reflect.DeepEqual(old.Annotations, new.Annotations) {
+		new.Annotations = old.Annotations
+	}
 	// TODO: replace Update call with UpdateStatus. This requires a custom API
 	// server with the /status subresource enabled and/or subresource support
 	// for CRDs (https://github.com/kubernetes/kubernetes/issues/38113)
