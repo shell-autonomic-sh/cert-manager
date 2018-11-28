@@ -64,6 +64,25 @@
   revision = "de5bf2ad457846296e2031421a34e2568e304e35"
 
 [[projects]]
+  digest = "1:6fe462d2d7e919e7b3d9dfc39503dde19d682afe24e86e4703447884f83658cc"
+  name = "github.com/aliyun/alibaba-cloud-sdk-go"
+  packages = [
+    "sdk",
+    "sdk/auth",
+    "sdk/auth/credentials",
+    "sdk/auth/signers",
+    "sdk/endpoints",
+    "sdk/errors",
+    "sdk/requests",
+    "sdk/responses",
+    "sdk/utils",
+    "services/alidns",
+  ]
+  pruneopts = "U"
+  revision = "20402d33af591427ce777b57acc857cba3c51065"
+  version = "1.42.0"
+
+[[projects]]
   branch = "master"
   digest = "1:d91e828fcbaad0e64cc56b1ec47142c37ce6812928ae5351b52bfa4abaef9e3a"
   name = "github.com/aws/aws-sdk-go"
@@ -474,7 +493,7 @@
   packages = ["."]
   pruneopts = "U"
   revision = "6240e1e7983a85228f7fd9c3e1b6932d46ec58e2"
-  version = "1.0.3"
+  version = "1.0.4"
 
 [[projects]]
   branch = "master"
@@ -650,6 +669,14 @@
   pruneopts = "U"
   revision = "572520ed46dbddaed19ea3d9541bdd0494163693"
   version = "v0.1"
+
+[[projects]]
+  digest = "1:7f569d906bdd20d906b606415b7d794f798f91a62fcfb6a4daa6d50690fb7a3f"
+  name = "github.com/satori/go.uuid"
+  packages = ["."]
+  pruneopts = "U"
+  revision = "f58768cc1a7a7e77a3bd49e98cdd21419399b6a3"
+  version = "v1.2.0"
 
 [[projects]]
   branch = "master"
@@ -1346,6 +1373,10 @@
     "github.com/Azure/go-autorest/autorest/adal",
     "github.com/Azure/go-autorest/autorest/azure",
     "github.com/Azure/go-autorest/autorest/to",
+    "github.com/aliyun/alibaba-cloud-sdk-go/sdk",
+    "github.com/aliyun/alibaba-cloud-sdk-go/sdk/auth/credentials",
+    "github.com/aliyun/alibaba-cloud-sdk-go/sdk/requests",
+    "github.com/aliyun/alibaba-cloud-sdk-go/services/alidns",
     "github.com/aws/aws-sdk-go/aws",
     "github.com/aws/aws-sdk-go/aws/awserr",
     "github.com/aws/aws-sdk-go/aws/client",

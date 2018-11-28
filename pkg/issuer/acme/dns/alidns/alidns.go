@@ -23,6 +23,7 @@ type Config struct {
 	APIKey             string
 	SecretKey          string
 	RegionID           string
+	NameServers        []string
 	PropagationTimeout time.Duration
 	PollingInterval    time.Duration
 	TTL                int
@@ -53,9 +54,9 @@ func NewDNSProvider() (*DNSProvider, error) {
 	// 	return nil, fmt.Errorf("alicloud: %v", err)
 	// }
 
-	ALICLOUD_ACCESS_KEY = os.Getenv("ALICLOUD_ACCESS_KEY")
-	ALICLOUD_SECRET_KEY = os.Getenv("ALICLOUD_SECRET_KEY")
-	ALICLOUD_REGION_ID = os.Getenv("ALICLOUD_REGION_ID")
+	ALICLOUD_ACCESS_KEY := os.Getenv("ALICLOUD_ACCESS_KEY")
+	ALICLOUD_SECRET_KEY := os.Getenv("ALICLOUD_SECRET_KEY")
+	ALICLOUD_REGION_ID := os.Getenv("ALICLOUD_REGION_ID")
 	if ALICLOUD_REGION_ID == "" {
 		ALICLOUD_REGION_ID = defaultRegionID
 	}
@@ -72,11 +73,12 @@ func NewDNSProvider() (*DNSProvider, error) {
 // to return a DNSProvider instance configured for alidns.
 // Deprecated
 // FIXME: dns01Nameservers
-func NewDNSProviderCredentials(apiKey, secretKey, regionID string) (*DNSProvider, error) {
+func NewDNSProviderCredentials(apiKey, secretKey, regionID string, dns01Nameservers []string) (*DNSProvider, error) {
 	config := NewDefaultConfig()
 	config.APIKey = apiKey
 	config.SecretKey = secretKey
 	config.RegionID = regionID
+	config.NameServers = dns01Nameservers
 
 	return NewDNSProviderConfig(config)
 }
@@ -114,7 +116,7 @@ func (d *DNSProvider) Timeout() (timeout, interval time.Duration) {
 
 // Present creates a TXT record to fulfill the dns-01 challenge.
 func (d *DNSProvider) Present(domain, token, keyAuth string) error {
-	fqdn, value, _ := util.DNS01Record(domain, keyAuth)
+	fqdn, value, _, _ := util.DNS01Record(domain, keyAuth, d.config.NameServers)
 	fmt.Println("domain:", domain)
 
 	_, zoneName, err := d.getHostedZone(domain)
@@ -133,7 +135,7 @@ func (d *DNSProvider) Present(domain, token, keyAuth string) error {
 
 // CleanUp removes the TXT record matching the specified parameters.
 func (d *DNSProvider) CleanUp(domain, token, keyAuth string) error {
-	fqdn, _, _ := util.DNS01Record(domain, keyAuth)
+	fqdn, _, _, _ := util.DNS01Record(domain, keyAuth, d.config.NameServers)
 
 	records, err := d.findTxtRecords(domain, fqdn)
 	if err != nil {

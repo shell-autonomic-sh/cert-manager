@@ -167,10 +167,9 @@ type ACMEIssuerDNS01ProviderAkamai struct {
 
 // ACMEIssuerDNS01ProviderAlidns for alicloud
 type ACMEIssuerDNS01ProviderAlidns struct {
-	ServiceConsumerDomain string            `json:"serviceConsumerDomain"`
-	ClientToken           SecretKeySelector `json:"clientTokenSecretRef"`
-	ClientSecret          SecretKeySelector `json:"clientSecretSecretRef"`
-	AccessToken           SecretKeySelector `json:"accessTokenSecretRef"`
+	AccessKeyID     string            `json:"accessKeyID"`
+	SecretAccessKey SecretKeySelector `json:"secretAccessKeySecretRef"`
+	Region          string            `json:"region"`
 }
 
 // ACMEIssuerDNS01ProviderCloudDNS is a structure containing the DNS
