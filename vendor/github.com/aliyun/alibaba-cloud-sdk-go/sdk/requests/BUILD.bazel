@@ -1,0 +1,48 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "acs_request.go",
+        "common_request.go",
+        "roa_request.go",
+        "rpc_request.go",
+        "types.go",
+    ],
+    importmap = "github.com/jetstack/cert-manager/vendor/github.com/aliyun/alibaba-cloud-sdk-go/sdk/requests",
+    importpath = "github.com/aliyun/alibaba-cloud-sdk-go/sdk/requests",
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/aliyun/alibaba-cloud-sdk-go/sdk/errors:go_default_library",
+        "//vendor/github.com/aliyun/alibaba-cloud-sdk-go/sdk/utils:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = [
+        "acs_request_test.go",
+        "common_request_test.go",
+        "roa_request_test.go",
+        "rpc_request_test.go",
+        "types_test.go",
+    ],
+    embed = [":go_default_library"],
+    tags = ["manual"],
+    deps = ["//vendor/github.com/stretchr/testify/assert:go_default_library"],
+)
+
+filegroup(
+    name = "package-srcs",
+    srcs = glob(["**"]),
+    tags = ["automanaged"],
+    visibility = ["//visibility:private"],
+)
+
+filegroup(
+    name = "all-srcs",
+    srcs = [":package-srcs"],
+    tags = ["automanaged"],
+    visibility = ["//visibility:public"],
+)

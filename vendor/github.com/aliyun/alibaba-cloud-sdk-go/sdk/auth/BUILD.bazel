@@ -1,0 +1,59 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "credential.go",
+        "roa_signature_composer.go",
+        "rpc_signature_composer.go",
+        "signer.go",
+    ],
+    importmap = "github.com/jetstack/cert-manager/vendor/github.com/aliyun/alibaba-cloud-sdk-go/sdk/auth",
+    importpath = "github.com/aliyun/alibaba-cloud-sdk-go/sdk/auth",
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//vendor/github.com/aliyun/alibaba-cloud-sdk-go/sdk/auth/credentials:go_default_library",
+        "//vendor/github.com/aliyun/alibaba-cloud-sdk-go/sdk/auth/signers:go_default_library",
+        "//vendor/github.com/aliyun/alibaba-cloud-sdk-go/sdk/errors:go_default_library",
+        "//vendor/github.com/aliyun/alibaba-cloud-sdk-go/sdk/requests:go_default_library",
+        "//vendor/github.com/aliyun/alibaba-cloud-sdk-go/sdk/responses:go_default_library",
+        "//vendor/github.com/aliyun/alibaba-cloud-sdk-go/sdk/utils:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = [
+        "credential_test.go",
+        "roa_signature_composer_test.go",
+        "rpc_signature_composer_test.go",
+        "signer_test.go",
+    ],
+    embed = [":go_default_library"],
+    tags = ["manual"],
+    deps = [
+        "//vendor/github.com/aliyun/alibaba-cloud-sdk-go/sdk/auth/credentials:go_default_library",
+        "//vendor/github.com/aliyun/alibaba-cloud-sdk-go/sdk/auth/signers:go_default_library",
+        "//vendor/github.com/aliyun/alibaba-cloud-sdk-go/sdk/requests:go_default_library",
+        "//vendor/github.com/stretchr/testify/assert:go_default_library",
+    ],
+)
+
+filegroup(
+    name = "package-srcs",
+    srcs = glob(["**"]),
+    tags = ["automanaged"],
+    visibility = ["//visibility:private"],
+)
+
+filegroup(
+    name = "all-srcs",
+    srcs = [
+        ":package-srcs",
+        "//vendor/github.com/aliyun/alibaba-cloud-sdk-go/sdk/auth/credentials:all-srcs",
+        "//vendor/github.com/aliyun/alibaba-cloud-sdk-go/sdk/auth/signers:all-srcs",
+    ],
+    tags = ["automanaged"],
+    visibility = ["//visibility:public"],
+)
