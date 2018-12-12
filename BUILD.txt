@@ -1,0 +1,8 @@
+1. don't use bazel 0.20, use 0.18.
+2. install jdk and zlib.
+3. install golang and bazel.
+4. setup environment, include PATH and GOPATH.
+5. put project into $GOLANG/src/github.com/jetstack/cert-manager/ (url of our repo is github.com/autonomic-ai/cert-manager, but the project need this repo).
+6. In Gopkg.lock update the `json-iterator` dependency to version 1.0.4.
+7. run `bazel run //hack:update-deps`.
+8. run `make build`.
