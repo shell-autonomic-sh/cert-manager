@@ -436,6 +436,22 @@ func TestValidateACMEIssuerDNS01Config(t *testing.T) {
 				field.Required(providersPath.Index(0).Child("route53", "region"), ""),
 			},
 		},
+		"missing alidns ak/sk": {
+			cfg: &v1alpha1.ACMEIssuerDNS01Config{
+				Providers: []v1alpha1.ACMEIssuerDNS01Provider{
+					{
+						Name:   "a name",
+						Alidns: &v1alpha1.ACMEIssuerDNS01ProviderAlidns{},
+					},
+				},
+			},
+			errs: []*field.Error{
+				field.Required(providersPath.Index(0).Child("alidns", "accessKeySecretRef", "name"), "secret name is required"),
+				field.Required(providersPath.Index(0).Child("alidns", "accessKeySecretRef", "key"), "secret key is required"),
+				field.Required(providersPath.Index(0).Child("alidns", "secretAccessKeySecretRef", "name"), "secret name is required"),
+				field.Required(providersPath.Index(0).Child("alidns", "secretAccessKeySecretRef", "key"), "secret key is required"),
+			},
+		},
 		"missing provider config": {
 			cfg: &v1alpha1.ACMEIssuerDNS01Config{
 				Providers: []v1alpha1.ACMEIssuerDNS01Provider{

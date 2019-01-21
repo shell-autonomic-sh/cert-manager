@@ -198,7 +198,8 @@ func FindZoneByFqdn(fqdn string, nameservers []string) (string, error) {
 		}
 
 		// Any response code other than NOERROR and NXDOMAIN is treated as error
-		if in.Rcode != dns.RcodeNameError && in.Rcode != dns.RcodeSuccess {
+		// Alicloud will return SERVFAIL, instead of NXDOMAIN.
+		if in.Rcode != dns.RcodeNameError && in.Rcode != dns.RcodeServerFailure && in.Rcode != dns.RcodeSuccess {
 			return "", fmt.Errorf("Unexpected response code '%s' for %s",
 				dns.RcodeToString[in.Rcode], domain)
 		}

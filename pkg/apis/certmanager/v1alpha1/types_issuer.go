@@ -156,6 +156,7 @@ type ACMEIssuerDNS01Provider struct {
 	Name string `json:"name"`
 
 	Akamai     *ACMEIssuerDNS01ProviderAkamai     `json:"akamai,omitempty"`
+	Alidns     *ACMEIssuerDNS01ProviderAlidns     `json:"alidns,omitempty"`
 	CloudDNS   *ACMEIssuerDNS01ProviderCloudDNS   `json:"clouddns,omitempty"`
 	Cloudflare *ACMEIssuerDNS01ProviderCloudflare `json:"cloudflare,omitempty"`
 	Route53    *ACMEIssuerDNS01ProviderRoute53    `json:"route53,omitempty"`
@@ -171,6 +172,13 @@ type ACMEIssuerDNS01ProviderAkamai struct {
 	ClientToken           SecretKeySelector `json:"clientTokenSecretRef"`
 	ClientSecret          SecretKeySelector `json:"clientSecretSecretRef"`
 	AccessToken           SecretKeySelector `json:"accessTokenSecretRef"`
+}
+
+// ACMEIssuerDNS01ProviderAlidns for alicloud
+type ACMEIssuerDNS01ProviderAlidns struct {
+	AccessKey       SecretKeySelector `json:"accessKeySecretRef"`
+	SecretAccessKey SecretKeySelector `json:"secretAccessKeySecretRef"`
+	Region          string            `json:"region"`
 }
 
 // ACMEIssuerDNS01ProviderCloudDNS is a structure containing the DNS
