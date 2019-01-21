@@ -49,11 +49,6 @@ type DNSProvider struct {
 // NewDNSProvider returns a DNSProvider instance configured for Alibaba Cloud DNS.
 // Credentials must be passed in the environment variables: ALICLOUD_ACCESS_KEY and ALICLOUD_SECRET_KEY.
 func NewDNSProvider() (*DNSProvider, error) {
-	// values, err := env.Get("ALICLOUD_ACCESS_KEY", "ALICLOUD_SECRET_KEY")
-	// if err != nil {
-	// 	return nil, fmt.Errorf("alicloud: %v", err)
-	// }
-
 	ALICLOUD_ACCESS_KEY := os.Getenv("ALICLOUD_ACCESS_KEY")
 	ALICLOUD_SECRET_KEY := os.Getenv("ALICLOUD_SECRET_KEY")
 	ALICLOUD_REGION_ID := os.Getenv("ALICLOUD_REGION_ID")

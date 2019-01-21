@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/require"
-	// "github.com/jetstack/cert-manager/pkg/issuer/acme/dns/util"
 )
 
 var (
@@ -16,11 +15,6 @@ var (
 	alidnsRegion    string
 	alidnsDomain    string
 )
-
-// var envTest = tester.NewEnvTest(
-// 	"ALICLOUD_ACCESS_KEY",
-// 	"ALICLOUD_SECRET_KEY").
-// 	WithDomain("ALICLOUD_DOMAIN")
 
 func init() {
 	alidnsAccessKey = os.Getenv("ALICLOUD_ACCESS_KEY")

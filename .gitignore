@@ -4,3 +4,5 @@
 /controller
 /ingress-shim
 /hack/build/dockerfiles/cert-manager-*_*_*
+scanned_files.txt
+truffle.log
